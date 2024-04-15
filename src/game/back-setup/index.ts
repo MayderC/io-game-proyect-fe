@@ -25,6 +25,22 @@ k.loadSprite("test", "spritesheet.png", {
   },
 });
 
+k.loadSprite("vault", "spritesheet.png", {
+  sliceX: 39,
+  sliceY: 31,
+  anims: {
+    open: { from: 137, to: 138, loop: false, speed: 8 },
+  },
+});
+
+k.loadSprite("key", "spritesheet.png", {
+  sliceX: 39,
+  sliceY: 31,
+  anims: {
+    idle: 99,
+  },
+});
+
 k.loadSprite("map", "map.png");
 
 k.setBackground(k.Color.fromHex("#3a4042"));

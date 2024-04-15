@@ -31,7 +31,7 @@ k.scene("game", async () => {
   ]);
 
   for (const layer of layers) {
-    if (layer.type === "boundaries") {
+    if (layer.name === "boundaries") {
       for (const boundary of layer.objects) {
         map.add([
           k.area({
@@ -41,23 +41,15 @@ k.scene("game", async () => {
           k.pos(boundary.x, boundary.y),
           boundary.name,
         ]);
-
-        if (boundary.name) {
-          player.onCollide(boundary.name, () => {
-            player.isInDialog = true;
-            //todo: show dialog
-          });
-        }
       }
-      continue;
     }
 
     if (layer.name == "spawnpoint") {
       for (const spawnpoint of layer.objects) {
         if (spawnpoint.id === 1) {
           player.pos = k.vec2(
-            map.pos.x + spawnpoint.x * 3,
-            map.pos.y + spawnpoint.y * 3
+            map.pos.x + spawnpoint.x * 4,
+            map.pos.y + spawnpoint.y * 4
           );
         }
         k.add(player);

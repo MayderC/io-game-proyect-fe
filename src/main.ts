@@ -9,7 +9,7 @@ k.scene("game", async () => {
 
   const layers = mapData.layers;
 
-  const map = k.add([k.sprite("map"), k.pos(-1200, -600), k.scale(2)]);
+  const map = k.add([k.sprite("map"), k.pos(-1200, -600), k.scale(4)]);
 
   const player = k.make([
     k.sprite("test", {
@@ -21,7 +21,7 @@ k.scene("game", async () => {
     k.body(),
     k.anchor("center"),
     k.pos(100, 100),
-    k.scale(2),
+    k.scale(4),
     {
       speed: 120,
       direction: "down",

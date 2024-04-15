@@ -9,12 +9,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "terser": "^5.30.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
   },
   "dependencies": {
     "kaboom": "^3000.1.17",
-    "phaser": "^3.80.1",
     "socket.io-client": "^4.7.5"
   }
 }

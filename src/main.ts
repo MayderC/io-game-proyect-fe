@@ -1,7 +1,5 @@
 import "./style.css";
-import { State } from "./state/state";
 import { k } from "./game/back-setup";
-import { Player } from "./game/objects/Player";
 
 //State.getInstance().setCurrentPlayer(new Player("player"));
 //State.getInstance().setSocket();

@@ -1,4 +1,4 @@
-import { EMIT, ON } from "../contants/constants";
+import { EMIT } from "../contants/constants";
 import { Player } from "../game/objects/Player";
 import { io } from "socket.io-client";
 const URL = import.meta.env.VITE_API_URL;

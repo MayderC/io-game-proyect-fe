@@ -1,15 +1,21 @@
+import { EMIT, ON } from "../contants/constants";
 import { Player } from "../game/objects/Player";
-import { setSocket } from "../socket/socket";
+import { io } from "socket.io-client";
+const URL = import.meta.env.VITE_API_URL;
+
+const setSocket = () => {
+  return io(URL);
+};
 
 //create a singleton class to store the state
 export class State {
   public static instance: State;
-  public players: Player[];
+  public players: Map<string, Player> = new Map();
   public currentPlayer: any;
   public socket: any;
 
   private constructor() {
-    this.players = [];
+    this.players = new Map();
     this.currentPlayer = {};
     this.socket = {};
   }
@@ -24,14 +30,20 @@ export class State {
 
   public setSocket() {
     this.socket = setSocket();
+    this.socket.on("connect", () => {
+      console.log("connected");
+      this.socket.emit(EMIT.JOIN, {
+        player: this.currentPlayer,
+      });
+    });
   }
 
   public addPlayer(player: Player) {
-    this.players.push(player);
+    this.players.set(player.id, player);
   }
 
   public removePlayer(player: Player) {
-    this.players = this.players.filter((p) => p.id !== player.id);
+    this.players.delete(player.id);
   }
 
   public setCurrentPlayer(player: Player) {
@@ -43,7 +55,8 @@ export class State {
   }
 
   public getPlayers() {
-    return this.players;
+    //return an array of players
+    return Array.from(this.players.values());
   }
 
   public getSocket() {
@@ -51,6 +64,6 @@ export class State {
   }
 
   public getPlayerById(id: string) {
-    return this.players.find((p) => p.id === id);
+    return this.players.get(id);
   }
 }

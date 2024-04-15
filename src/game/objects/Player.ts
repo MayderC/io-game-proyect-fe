@@ -1,50 +1,61 @@
 export class Player {
-  public id: string = window.crypto.getRandomValues(new Uint32Array(1))[0].toString(16)
-  public name: string
-  public score: number
-  public lives: number = 3
-  public livePercentage: number = 100
-  public isAlive: boolean = true
-  public isWinner: boolean = false
-  public iDefending: boolean = false
-  public isReading: boolean = false
-  public team: string = 'red'
+  public id: string = window.crypto
+    .getRandomValues(new Uint32Array(1))[0]
+    .toString(16);
+  public name: string;
+  public score: number;
+  public lives: number = 3;
+  public livePercentage: number = 100;
+  public isAlive: boolean = true;
+  public isWinner: boolean = false;
+  public iDefending: boolean = false;
+  public isReading: boolean = false;
+  public team: string = "red";
+  public x: number = 0;
+  public y: number = 0;
 
   constructor(name: string) {
-    this.name = name
-    this.score = 0
+    this.name = name;
+    this.score = 0;
   }
 
   public incrementScore() {
-    this.score++
+    this.score++;
+  }
+
+  public move(x: number, y: number) {
+    // move player to x, y
+
+    this.x = x;
+    this.y = y;
   }
 
   public decrementLives() {
-    this.lives--
+    this.lives--;
     if (this.lives === 0) {
-      this.isAlive = false
+      this.isAlive = false;
     }
   }
 
   private incrementLivePercentage() {
     if (this.livePercentage < 100) {
-      this.livePercentage += 10
+      this.livePercentage += 10;
     }
   }
 
   private decrementLivePercentage() {
     if (this.livePercentage > 0) {
-      this.livePercentage -= 10
+      this.livePercentage -= 10;
     }
   }
 
   public eatFood() {
-    this.incrementLivePercentage()
+    this.incrementLivePercentage();
   }
 
   public attack(enemy: Player) {
-    if (enemy.iDefending || enemy.isReading) return
-    enemy.decrementLivePercentage()
+    if (enemy.iDefending || enemy.isReading) return;
+    enemy.decrementLivePercentage();
   }
 
   public defend() {}

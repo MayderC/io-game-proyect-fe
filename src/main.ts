@@ -63,11 +63,6 @@ k.scene("game", async () => {
         k.add(player);
       }
     }
-
-    if (layer.name == "ramdom") {
-      for (const spawnpoint of layer.objects) {
-      }
-    }
   }
 
   k.onUpdate(() => {

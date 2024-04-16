@@ -1,7 +1,7 @@
 import "./style.css";
 import { k } from "./game/back-setup";
 import { State } from "./state/state";
-import { Player } from "./game/objects/Player";
+import { IPlayer, Player } from "./game/objects/Player";
 import { ON } from "./contants/constants";
 import { createPlayer, createPlayers } from "./game/back-setup/create-player";
 import { movePlayer } from "./socket/emits";
@@ -157,20 +157,24 @@ k.scene("game", async () => {
 
   State.getInstance()
     .getSocket()
-    .on(ON.JOINED, (data: { player: Player }) => {
+    .on(ON.JOINED, (data: { player: IPlayer }) => {
+      console.log("joined", data.player);
       createPlayer(k, data.player, mySpawnpoint);
     });
 
   State.getInstance()
     .getSocket()
-    .on(ON.GET_ALL_PLAYERS, (data: { clients: Player[] }) => {
-      createPlayers(k, data.clients);
+    .on(ON.GET_ALL_PLAYERS, (data: { clients: string }) => {
+      const players: IPlayer[] = JSON.parse(data.clients);
+      console.log("GET_ALL_PLAYERS", players);
+      createPlayers(k, players);
     });
 });
 
 State.getInstance()
   .getSocket()
   .on(ON.LEAVE, (data: { id: string }) => {
+    console.log("leave", data);
     const player = State.getInstance().getPlayerById(data.id);
     player?.kPlayer.destroy();
     State.getInstance().removePlayer(data.id);

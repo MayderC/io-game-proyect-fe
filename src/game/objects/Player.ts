@@ -1,9 +1,14 @@
 import { GameObj } from "kaboom";
 
+export interface IPlayer {
+  id: string;
+  name: string;
+  x: number;
+  y: number;
+}
+
 export class Player {
-  public id: string = window.crypto
-    .getRandomValues(new Uint32Array(1))[0]
-    .toString(16);
+  public id: string = "";
   public name: string;
   public score: number;
   public lives: number = 3;
@@ -13,8 +18,6 @@ export class Player {
   public iDefending: boolean = false;
   public isReading: boolean = false;
   public team: string = "red";
-  public x: number = 0;
-  public y: number = 0;
   public kPlayer: GameObj;
 
   constructor(name: string, kPlayer: GameObj) {
@@ -25,13 +28,6 @@ export class Player {
 
   public incrementScore() {
     this.score++;
-  }
-
-  public move(x: number, y: number) {
-    // move player to x, y
-
-    this.x = x;
-    this.y = y;
   }
 
   public decrementLives() {

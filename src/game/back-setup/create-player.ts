@@ -1,8 +1,12 @@
 import { KaboomCtx } from "kaboom";
 import { State } from "../../state/state";
-import { Player } from "../objects/Player";
+import { IPlayer, Player } from "../objects/Player";
 
-export const createPlayer = (k: KaboomCtx, playerState: Player, spawn: any) => {
+export const createPlayer = (
+  k: KaboomCtx,
+  playerState: IPlayer,
+  spawn: any
+) => {
   const player = k.make([
     k.sprite("test", {
       anim: "idle-down",
@@ -24,19 +28,20 @@ export const createPlayer = (k: KaboomCtx, playerState: Player, spawn: any) => {
 
   k.add(player);
   console.log(player, "CREANDO PLAYER");
+  const tempPlayer = new Player(playerState.name, player);
+  tempPlayer.id = playerState.id;
 
-  playerState.kPlayer = player;
-  State.getInstance().addPlayer(playerState);
+  State.getInstance().addPlayer(tempPlayer);
   console.log(State.getInstance().players);
 };
 
-export const createPlayers = (k: KaboomCtx, players: Player[]) => {
+export const createPlayers = (k: KaboomCtx, players: IPlayer[]) => {
   console.log("PLAYERS", players);
 
   players.forEach((player) => {
     createPlayer(k, player, {
-      x: player.kPlayer.pos.x,
-      y: player.kPlayer.pos.y,
+      x: player.x,
+      y: player.y,
     });
   });
 };

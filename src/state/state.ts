@@ -1,5 +1,5 @@
 import { EMIT } from "../contants/constants";
-import { Player } from "../game/objects/Player";
+import { IPlayer, Player } from "../game/objects/Player";
 import { io } from "socket.io-client";
 const URL = import.meta.env.VITE_API_URL;
 
@@ -32,16 +32,20 @@ export class State {
     this.socket = setSocket();
     this.socket.on("connect", () => {
       this.currentPlayer.id = this.socket.id;
-      this.socket.emit(EMIT.JOIN, {
-        player: this.currentPlayer,
-      });
-
+      const data: IPlayer = {
+        id: this.socket.id,
+        name: this.currentPlayer.kPlayer.name,
+        x: this.currentPlayer.kPlayer.pos.x,
+        y: this.currentPlayer.kPlayer.pos.y,
+      };
+      this.socket.emit(EMIT.JOIN, data);
       this.socket.emit(EMIT.GET_ALL_PLAYERS);
     });
 
     this.socket.on("disconnect", (player: any) => {
       //send a leave event to the server with the player object
-      this.socket.emit(EMIT.LEAVE, { player });
+      const data = JSON.stringify({ player });
+      this.socket.emit(EMIT.LEAVE, data);
     });
   }
 

@@ -2,10 +2,15 @@ import { State } from "../state/state";
 import { EMIT } from "../contants/constants";
 import { Player } from "../game/objects/Player";
 
-const socket = State.getInstance().getSocket();
-
-export const movePlayer = (x: number, y: number) => {
-  socket.emit(EMIT.MOVE, { x, y });
+type movePlayerType = {
+  x: number;
+  y: number;
+  direction: string;
+  id: string;
+};
+export const movePlayer = (data: movePlayerType) => {
+  const socket = State.getInstance().getSocket();
+  socket.emit(EMIT.MOVE, data);
 };
 
 export const attack = (player: Player) => {

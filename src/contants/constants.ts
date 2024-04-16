@@ -9,6 +9,8 @@ export const EMIT = {
   DEFEND_END: "defend-end",
   SUM_SCORE: "sum-score",
   JOIN: "join",
+  LEAVE: "leave",
+  GET_ALL_PLAYERS: "get-all-players",
 };
 
 export const ON = {
@@ -19,4 +21,6 @@ export const ON = {
   DEFEND_END: "defend-end",
   ATTACK_ANIMATION: "attack-animation",
   ATTACK_ACTION: "attack-action",
+  LEAVE: "leave",
+  GET_ALL_PLAYERS: "get-all-players",
 };

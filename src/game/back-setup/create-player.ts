@@ -1,8 +1,14 @@
-import { KaboomCtx } from "kaboom";
+import { GameObj, KaboomCtx } from "kaboom";
+import { State } from "../../state/state";
+import { Player } from "../objects/Player";
 
-export const createPlayer = (k: KaboomCtx, name: string) => {
-  k.make([
-    k.sprite("spritesheet", {
+export const createPlayer = (
+  k: KaboomCtx,
+  playerState: Player,
+  spawn: GameObj
+) => {
+  const player = k.make([
+    k.sprite("test", {
       anim: "idle-down",
     }),
     k.area({
@@ -11,12 +17,22 @@ export const createPlayer = (k: KaboomCtx, name: string) => {
     k.body(),
     k.anchor("center"),
     k.pos(100, 100),
-    k.scale(3),
+    k.scale(4),
     {
       speed: 120,
       direction: "down",
       isInDialog: false,
     },
-    name,
+    playerState.id,
   ]);
+
+  player.pos = k.vec2(spawn.x, spawn.y);
+  k.add(player);
+  console.log(player, "player");
+
+  player.onUpdate(() => {});
+
+  playerState.kPlayer = player;
+  State.getInstance().addPlayer(playerState);
+  console.log(State.getInstance().players);
 };

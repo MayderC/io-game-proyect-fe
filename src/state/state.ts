@@ -18,6 +18,7 @@ export class State {
     this.players = new Map();
     this.currentPlayer = {};
     this.socket = {};
+    this.k = {};
   }
 
   public static getInstance(): State {
@@ -28,13 +29,25 @@ export class State {
     return State.instance;
   }
 
+  public setKaboom(k: any) {
+    this.k = k;
+  }
+
   public setSocket() {
     this.socket = setSocket();
     this.socket.on("connect", () => {
-      console.log("connected");
+      this.currentPlayer.id = this.socket.id;
       this.socket.emit(EMIT.JOIN, {
         player: this.currentPlayer,
       });
+
+      this.socket.emit(EMIT.GET_ALL_PLAYERS);
+    });
+
+    this.socket.on("disconnect", (player) => {
+      console.log("disconnect", player);
+      //send a leave event to the server with the player object
+      this.socket.emit(EMIT.LEAVE, { player });
     });
   }
 
@@ -42,8 +55,8 @@ export class State {
     this.players.set(player.id, player);
   }
 
-  public removePlayer(player: Player) {
-    this.players.delete(player.id);
+  public removePlayer(id: string) {
+    this.players.delete(id);
   }
 
   public setCurrentPlayer(player: Player) {

@@ -1,3 +1,5 @@
+import { GameObj } from "kaboom";
+
 export class Player {
   public id: string = window.crypto
     .getRandomValues(new Uint32Array(1))[0]
@@ -13,10 +15,12 @@ export class Player {
   public team: string = "red";
   public x: number = 0;
   public y: number = 0;
+  public kPlayer: GameObj;
 
-  constructor(name: string) {
+  constructor(name: string, kPlayer: GameObj) {
     this.name = name;
     this.score = 0;
+    this.kPlayer = kPlayer;
   }
 
   public incrementScore() {

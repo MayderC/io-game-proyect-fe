@@ -14,17 +14,21 @@ export const movePlayer = (data: movePlayerType) => {
 };
 
 export const attack = (player: Player) => {
+  const socket = State.getInstance().getSocket();
   socket.emit(EMIT.ATTACK, { player });
 };
 
 export const defendStart = () => {
+  const socket = State.getInstance().getSocket();
   socket.emit(EMIT.DEFEND_START);
 };
 
 export const defendEnd = () => {
+  const socket = State.getInstance().getSocket();
   socket.emit(EMIT.DEFEND_END);
 };
 
 export const sumScore = (score: number) => {
+  const socket = State.getInstance().getSocket();
   socket.emit(EMIT.SUM_SCORE, { score });
 };

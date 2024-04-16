@@ -2,7 +2,7 @@ import "./style.css";
 import { k } from "./game/back-setup";
 import { State } from "./state/state";
 import { Player } from "./game/objects/Player";
-import { EMIT, ON } from "./contants/constants";
+import { ON } from "./contants/constants";
 import { createPlayer, createPlayers } from "./game/back-setup/create-player";
 import { movePlayer } from "./socket/emits";
 
@@ -77,15 +77,15 @@ k.scene("game", async () => {
     k.camPos(player.pos);
   });
 
-  k.onCollide("player", "key", (player, boundary) => {
-    console.log("collide");
-  });
+  // k.onCollide("player", "key", (player, boundary) => {
+  //   console.log("collide");
+  // });
 
-  k.onCollide("player", "vault", (player, boundary) => {
-    console.log("collide");
-  });
+  // k.onCollide("player", "vault", (player, boundary) => {
+  //   console.log("collide");
+  // });
 
-  //use dt() to make movement framerate independent
+  // //use dt() to make movement framerate independent
 
   k.onKeyPress("left", () => {
     player.play("walk-left");
@@ -157,20 +157,20 @@ k.scene("game", async () => {
 
   State.getInstance()
     .getSocket()
-    .on(ON.JOINED, (data) => {
+    .on(ON.JOINED, (data: { player: Player }) => {
       createPlayer(k, data.player, mySpawnpoint);
     });
 
   State.getInstance()
     .getSocket()
-    .on(ON.GET_ALL_PLAYERS, (data) => {
+    .on(ON.GET_ALL_PLAYERS, (data: { clients: Player[] }) => {
       createPlayers(k, data.clients);
     });
 });
 
 State.getInstance()
   .getSocket()
-  .on(ON.LEAVE, (data) => {
+  .on(ON.LEAVE, (data: { id: string }) => {
     const player = State.getInstance().getPlayerById(data.id);
     player?.kPlayer.destroy();
     State.getInstance().removePlayer(data.id);

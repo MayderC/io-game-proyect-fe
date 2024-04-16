@@ -1,4 +1,4 @@
-import { EMIT, ON } from "../contants/constants";
+import { EMIT } from "../contants/constants";
 import { Player } from "../game/objects/Player";
 import { io } from "socket.io-client";
 const URL = import.meta.env.VITE_API_URL;
@@ -18,7 +18,6 @@ export class State {
     this.players = new Map();
     this.currentPlayer = {};
     this.socket = {};
-    this.k = {};
   }
 
   public static getInstance(): State {
@@ -44,8 +43,7 @@ export class State {
       this.socket.emit(EMIT.GET_ALL_PLAYERS);
     });
 
-    this.socket.on("disconnect", (player) => {
-      console.log("disconnect", player);
+    this.socket.on("disconnect", (player: any) => {
       //send a leave event to the server with the player object
       this.socket.emit(EMIT.LEAVE, { player });
     });

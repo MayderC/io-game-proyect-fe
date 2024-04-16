@@ -1,12 +1,8 @@
-import { GameObj, KaboomCtx } from "kaboom";
+import { KaboomCtx } from "kaboom";
 import { State } from "../../state/state";
 import { Player } from "../objects/Player";
 
-export const createPlayer = (
-  k: KaboomCtx,
-  playerState: Player,
-  spawn: GameObj
-) => {
+export const createPlayer = (k: KaboomCtx, playerState: Player, spawn: any) => {
   const player = k.make([
     k.sprite("test", {
       anim: "idle-down",
@@ -16,7 +12,7 @@ export const createPlayer = (
     }),
     k.body(),
     k.anchor("center"),
-    k.pos(100, 100),
+    k.pos(k.vec2(spawn.x, spawn.y)),
     k.scale(4),
     {
       speed: 120,
@@ -26,13 +22,21 @@ export const createPlayer = (
     playerState.id,
   ]);
 
-  player.pos = k.vec2(spawn.x, spawn.y);
   k.add(player);
-  console.log(player, "player");
-
-  player.onUpdate(() => {});
+  console.log(player, "CREANDO PLAYER");
 
   playerState.kPlayer = player;
   State.getInstance().addPlayer(playerState);
   console.log(State.getInstance().players);
+};
+
+export const createPlayers = (k: KaboomCtx, players: Player[]) => {
+  console.log("PLAYERS", players);
+
+  players.forEach((player) => {
+    createPlayer(k, player, {
+      x: player.kPlayer.pos.x,
+      y: player.kPlayer.pos.y,
+    });
+  });
 };

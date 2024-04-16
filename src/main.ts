@@ -3,7 +3,7 @@ import { k } from "./game/back-setup";
 import { State } from "./state/state";
 import { Player } from "./game/objects/Player";
 import { EMIT, ON } from "./contants/constants";
-import { createPlayer } from "./game/back-setup/create-player";
+import { createPlayer, createPlayers } from "./game/back-setup/create-player";
 import { movePlayer } from "./socket/emits";
 
 const player = k.make([
@@ -160,15 +160,19 @@ k.scene("game", async () => {
     .on(ON.JOINED, (data) => {
       createPlayer(k, data.player, mySpawnpoint);
     });
+
+  State.getInstance()
+    .getSocket()
+    .on(ON.GET_ALL_PLAYERS, (data) => {
+      createPlayers(k, data.clients);
+    });
 });
 
 State.getInstance()
   .getSocket()
   .on(ON.LEAVE, (data) => {
     const player = State.getInstance().getPlayerById(data.id);
-
     player?.kPlayer.destroy();
-
     State.getInstance().removePlayer(data.id);
   });
 

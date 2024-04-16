@@ -148,7 +148,7 @@ k.scene("game", async () => {
 
   State.getInstance()
     .getSocket()
-    .on(ON.MOVE, (data) => {
+    .on(ON.MOVE, (data: { id: string; direction: any; x: any; y: any }) => {
       const player = State.getInstance().players.get(data.id);
       //player?.kPlayer.moveTo(data.x, data.y);
       player?.kPlayer.play(`walk-${data.direction}`);

@@ -28,10 +28,6 @@ export class State {
     return State.instance;
   }
 
-  public setKaboom(k: any) {
-    this.k = k;
-  }
-
   public setSocket() {
     this.socket = setSocket();
     this.socket.on("connect", () => {

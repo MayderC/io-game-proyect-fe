@@ -2,10 +2,16 @@ import "./style.css";
 import { k } from "./game/back-setup";
 import { State } from "./state/state";
 import { IPlayer, Player } from "./game/objects/Player";
-import { ON } from "./contants/constants";
-import { createPlayer, createPlayers } from "./game/back-setup/create-player";
+import { EMIT, ON } from "./contants/constants";
+import {
+  createCoin,
+  createCoins,
+  createPlayer,
+  createPlayers,
+} from "./game/back-setup/create-player";
 import { movePlayer } from "./socket/emits";
 import { getPlayerName } from "./game/helpers/get-players";
+import { generateHtml } from "./game/logic/getRandomOperation";
 
 export default () => {
   const player = k.make([
@@ -29,6 +35,7 @@ export default () => {
 
   State.getInstance().setCurrentPlayer(new Player(getPlayerName()!, player));
   State.getInstance().setSocket();
+  State.getInstance().currentPlayer.name = getPlayerName();
 
   k.scene("game", async () => {
     const mapData = await fetch("/map.json").then((res) => res.json());
@@ -39,13 +46,15 @@ export default () => {
 
     player.onCollide("coin", (coin) => {
       console.log("coin collected");
-      player.play("idle-down");
 
-      //open modal and make a question
+      State.getInstance().socket.emit(EMIT.COIN_COLLECTED, {
+        x: coin.pos.x,
+        y: coin.pos.y,
+      });
 
-      //if answer is correct then sum points and emit to the server to broadcast to all players anr remove coin from the map
-
-      //if answer is wrong then remove points and remove coin from the map
+      const html = generateHtml();
+      document.getElementById("dialog")!.classList.remove("hidden");
+      State.getInstance().dialog.innerHTML = html;
 
       coin.destroy();
     });
@@ -150,6 +159,13 @@ export default () => {
 
     State.getInstance()
       .getSocket()
+      .on(ON.GET_OBJECTS, (data: { positions: { x: number; y: number }[] }) => {
+        createCoins(k, data.positions);
+        console.log(State.getInstance().coins);
+      });
+
+    State.getInstance()
+      .getSocket()
       .on(ON.MOVE, (data: { id: string; direction: any; x: any; y: any }) => {
         const player = State.getInstance().players.get(data.id);
         //player?.kPlayer.moveTo(data.x, data.y);
@@ -162,24 +178,63 @@ export default () => {
       .on(ON.JOINED, (data: { player: IPlayer }) => {
         console.log("joined", data.player);
         createPlayer(k, data.player, mySpawnpoint);
+        State.getInstance().updatePlayerScoreTop();
       });
 
     State.getInstance()
       .getSocket()
       .on(ON.GET_ALL_PLAYERS, (data: { clients: string }) => {
         const players: IPlayer[] = JSON.parse(data.clients);
-        console.log("GET_ALL_PLAYERS", players);
         createPlayers(k, players);
+        State.getInstance().updatePlayerScoreTop();
       });
   });
 
   State.getInstance()
     .getSocket()
     .on(ON.LEAVE, (data: { id: string }) => {
-      console.log("leave", data);
       const player = State.getInstance().getPlayerById(data.id);
       player?.kPlayer.destroy();
       State.getInstance().removePlayer(data.id);
+    });
+
+  State.getInstance()
+    .getSocket()
+    .on(
+      ON.NEW_OBJECT,
+      (data: { x: number; y: number; remove: { x: number; y: number } }) => {
+        if (State.getInstance().coins.length > 0) {
+          const coin = State.getInstance().coins.find(
+            (x) => x.pos.x === data.remove.x && x.pos.y === data.remove.y
+          );
+          coin?.destroy();
+        }
+
+        State.getInstance().coins.filter(
+          (x) => x.pos.x !== data.remove.x && x.pos.y !== data.remove.y
+        );
+        createCoin(k, { x: data.x, y: data.y });
+      }
+    );
+
+  State.getInstance()
+    .getSocket()
+    .on(ON.REMOVE_COIN, (data: { x: number; y: number }) => {
+      const coin = State.getInstance().coins.find(
+        (x) => x.pos.x === data.x && x.pos.y === data.y
+      );
+      coin?.destroy();
+      State.getInstance().coins.filter(
+        (coin) => coin.pos.x !== data.x && coin.pos.y !== data.y
+      );
+    });
+
+  State.getInstance()
+    .getSocket()
+    .on(ON.SUM_SCORE, (data: { id: string; points: number }) => {
+      console.log("sum score", data);
+      const player = State.getInstance();
+      player?.addPoints(data.id, data.points);
     });
 
   k.go("game");

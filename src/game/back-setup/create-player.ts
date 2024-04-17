@@ -47,13 +47,15 @@ export const createPlayers = (k: KaboomCtx, players: IPlayer[]) => {
 };
 
 export const createCoin = (k: KaboomCtx, pos: { x: number; y: number }) => {
-  const coin = k.make([
+  const coin = k.add([
     k.sprite("coin"),
     k.pos(pos.x, pos.y),
     k.scale(4),
     k.area(),
     "coin",
   ]);
+
+  State.getInstance().coins.push(coin);
   coin.play("idle-coin");
 };
 

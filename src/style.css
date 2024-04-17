@@ -43,6 +43,11 @@ h1 {
   line-height: 1.1;
 }
 
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
 #app,
 canvas {
   height: 100vh;
@@ -65,10 +70,6 @@ canvas {
   flex-direction: column;
   gap: 1em;
   z-index: 1;
-}
-
-.hidden {
-  display: none;
 }
 
 .title p {
@@ -113,5 +114,46 @@ div #start:hover {
 }
 
 .students div span {
+  font-size: 1.5em;
+}
+
+.dialog {
+  position: absolute;
+  bottom: 0;
+  padding: 1em;
+
+  gap: 1em;
+  z-index: 1;
+  background-color: #311047;
+  width: 300px;
+  height: 200px;
+  border-radius: 5px;
+}
+
+.options {
+  display: flex;
+  gap: 1em;
+}
+
+.question-id {
+  font-size: 1.5em;
+}
+
+.hidden {
+  display: none;
+}
+
+.top-players {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1em;
+  gap: 1em;
+  z-index: 1;
+  border-radius: 5px;
+  line-height: normal;
+}
+
+.top-players p {
   font-size: 1.5em;
 }

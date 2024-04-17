@@ -11,6 +11,7 @@ export const EMIT = {
   JOIN: "join",
   LEAVE: "leave",
   GET_ALL_PLAYERS: "get-all-players",
+  COIN_COLLECTED: "coin-collected",
 };
 
 export const ON = {
@@ -23,4 +24,7 @@ export const ON = {
   ATTACK_ACTION: "attack-action",
   LEAVE: "leave",
   GET_ALL_PLAYERS: "get-all-players",
+  GET_OBJECTS: "get-objects",
+  NEW_OBJECT: "new-object",
+  REMOVE_COIN: "remove-coin",
 };

@@ -5,6 +5,8 @@ import { IPlayer, Player } from "./game/objects/Player";
 import { ON } from "./contants/constants";
 import { createPlayer, createPlayers } from "./game/back-setup/create-player";
 import { movePlayer } from "./socket/emits";
+import { getPlayerName } from "./game/helpers/get-players";
+import start from "./start-menu";
 
 const player = k.make([
   k.sprite("test", {
@@ -22,13 +24,11 @@ const player = k.make([
     direction: "down",
     isInDialog: false,
   },
-  "player",
+  getPlayerName(),
 ]);
 
-State.getInstance().setCurrentPlayer(new Player("player", player));
+State.getInstance().setCurrentPlayer(new Player(getPlayerName()!, player));
 State.getInstance().setSocket();
-
-console.log("current player", State.getInstance().getCurrentPlayer());
 
 k.scene("game", async () => {
   const mapData = await fetch("/map.json").then((res) => res.json());
@@ -181,3 +181,7 @@ State.getInstance()
   });
 
 //k.go("game");
+
+start(() => {
+  k.go("game");
+});

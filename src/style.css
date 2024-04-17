@@ -14,8 +14,8 @@
 }
 
 @font-face {
-  font-family: monogram;
-  src: url(monogram.ttf);
+  font-family: "monogram";
+  src: url("../public/monogram.ttf");
 }
 
 a {
@@ -28,7 +28,9 @@ a:hover {
 }
 
 body {
+  font-family: "monogram", monospace;
   margin: 0;
+  position: relative;
   display: flex;
   place-items: center;
   overflow: hidden;
@@ -45,4 +47,70 @@ h1 {
 canvas {
   height: 100vh;
   width: 100%;
+}
+
+#app {
+  font-family: "monogram", monospace;
+  position: relative;
+  display: flex;
+  place-items: center;
+  justify-content: center;
+}
+
+.menu {
+  position: absolute;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  z-index: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.title p {
+  font-size: 2em;
+}
+
+.options {
+  display: flex;
+  gap: 1em;
+}
+
+input#name {
+  font-family: "monogram", monospace;
+  font-size: 1.5em;
+  padding: 0.5em;
+  border: 0;
+  background-color: #effffd;
+  color: rgba(30, 30, 30, 0.87);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.87);
+  outline: none;
+}
+
+div #start {
+  font-family: "monogram", monospace;
+  font-size: 1.5em;
+  padding: 0.5em;
+  border: 0;
+  background-color: #effffd;
+  color: rgba(30, 30, 30, 0.87);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.87);
+  outline: none;
+  cursor: pointer;
+}
+
+div #start:hover {
+  background-color: #936c90;
+}
+
+.students {
+  display: flex;
+  gap: 20px;
+}
+
+.students div span {
+  font-size: 1.5em;
 }

@@ -5,14 +5,71 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css">
   <title>Vite + TS</title>
 </head>
 
 <body>
   <div id="app">
     <canvas id="game"></canvas>
+    <div class="menu">
+      <div class="title">
+        <h1>
+          Juego de matemáticas
+        </h1>
+        <p>
+          Realiza la mayor cantidad de operaciones matemáticas.
+        </p>
+      </div>
+      <div class="options">
+        <div class="name">
+          <input type="text" id="name" placeholder="Enter your name" />
+        </div>
+        <div class="start">
+          <button id="start">Start</button>
+        </div>
+      </div>
+      <div class="students">
+        <div>
+          <h2>Estudiantes</h2>
+          <ul id="students">
+            <li>
+              <span>1.</span>
+              <span>Fabian Alvarado Ruiz</span>
+            </li>
+            <li>
+              <span>2.</span>
+              <span>Cynthia Martinez Álvarez</span>
+            </li>
+            <li>
+              <span>3.</span>
+              <span>Mayder Cortes Ballestero</span>
+            </li>
+            <li>
+              <span>4.</span>
+              <span>Esmeralda Rivera Aguilar</span>
+            </li>
+            <li>
+              <span>5.</span>
+              <span>Dylan Josue Gomez Dennis</span>
+            </li>
+          </ul>
+        </div>
+        <div class="docente">
+          <h2>Docente</h2>
+          <ul>
+            <li>
+              <span>1.</span>
+              <span>Xiomara Carrillo Montoya
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
   </div>
-  <script type="module" src="/src/main.ts"></script>
+  <script type="module" src="./src/main.ts"></script>
 </body>
 
 </html>

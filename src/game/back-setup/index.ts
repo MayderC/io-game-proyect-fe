@@ -43,6 +43,6 @@ k.loadSprite("key", "spritesheet.png", {
 
 k.loadSprite("map", "map.png");
 
-k.setBackground(k.Color.fromHex("#3a4042"));
+k.setBackground(k.Color.fromHex("#311047"));
 
 export { k };

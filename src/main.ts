@@ -180,4 +180,4 @@ State.getInstance()
     State.getInstance().removePlayer(data.id);
   });
 
-k.go("game");
+//k.go("game");

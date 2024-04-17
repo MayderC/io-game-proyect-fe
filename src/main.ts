@@ -37,6 +37,19 @@ export default () => {
 
     const map = k.add([k.sprite("map"), k.pos(-1200, -600), k.scale(4)]);
 
+    player.onCollide("coin", (coin) => {
+      console.log("coin collected");
+      player.play("idle-down");
+
+      //open modal and make a question
+
+      //if answer is correct then sum points and emit to the server to broadcast to all players anr remove coin from the map
+
+      //if answer is wrong then remove points and remove coin from the map
+
+      coin.destroy();
+    });
+
     let mySpawnpoint = {
       x: 0,
       y: 0,

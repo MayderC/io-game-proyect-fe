@@ -45,3 +45,23 @@ export const createPlayers = (k: KaboomCtx, players: IPlayer[]) => {
     });
   });
 };
+
+export const createCoin = (k: KaboomCtx, pos: { x: number; y: number }) => {
+  const coin = k.make([
+    k.sprite("coin"),
+    k.pos(pos.x, pos.y),
+    k.scale(4),
+    k.area(),
+    "coin",
+  ]);
+  coin.play("idle-coin");
+};
+
+export const createCoins = (
+  k: KaboomCtx,
+  coins: { x: number; y: number }[]
+) => {
+  coins.forEach((coin) => {
+    createCoin(k, coin);
+  });
+};

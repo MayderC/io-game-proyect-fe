@@ -41,6 +41,14 @@ k.loadSprite("key", "spritesheet.png", {
   },
 });
 
+k.loadSprite("coin", "spritesheet.png", {
+  sliceX: 39,
+  sliceY: 31,
+  anims: {
+    "idle-coin": { from: 969, to: 974, loop: true, speed: 12 },
+  },
+});
+
 k.loadSprite("map", "map.png");
 
 k.setBackground(k.Color.fromHex("#311047"));

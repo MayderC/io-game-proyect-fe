@@ -209,10 +209,11 @@ export default () => {
           );
           coin?.destroy();
         }
-
-        State.getInstance().coins.filter(
+        console.log(State.getInstance().coins.length, "BEFORE")
+        State.getInstance().coins = State.getInstance().coins.filter(
           (x) => x.pos.x !== data.remove.x && x.pos.y !== data.remove.y
         );
+        console.log(State.getInstance().coins.length, "AFTER")
         createCoin(k, { x: data.x, y: data.y });
       }
     );
